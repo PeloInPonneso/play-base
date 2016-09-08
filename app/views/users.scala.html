@@ -1,0 +1,47 @@
+@(currentPage: web.Page[_ <: User])
+
+@link(newPage:Int) = @{
+   	routes.Administration.users(newPage)
+}
+
+@header(key:String, title:String) = {
+    <th>
+        <a href="@link(0)">@title</a>
+    </th>
+}
+
+@main("Users") {
+
+	@if(currentPage.getTotalRowCount == 0) {
+        <div>
+            <em>Nothing to display</em>
+        </div>
+    } else {
+    	<table>
+        	<thead>
+        		<tr>
+        			@header("id", "Id")
+                	@header("username", "Username")
+                    @header("accountNonExpired", "Not Expired")
+                    @header("accountNonLocked", "Not Locked")
+                    @header("credentialsNonExpired", "Credentials Not Expired")
+                    @header("enabled", "Enabled")
+                    @header("", "Delete")
+            	</tr>
+			</thead>
+			<tbody>
+				@for(user <- currentPage.getList) {
+					<tr>
+						<td><a href="@routes.Administration.editUser(user.getId)">@user.getId</a></td>
+						<td>@user.getUsername</td>
+						<td>@user.isAccountNonExpired</td>
+						<td>@user.isAccountNonLocked</td>
+						<td>@user.isCredentialsNonExpired</td>
+						<td>@user.isEnabled</td>
+						<td><a href="@routes.Administration.deleteUser(user.getId)">X</a></td>
+					</tr>
+				}
+			</tbody>
+		</table>
+    }
+}

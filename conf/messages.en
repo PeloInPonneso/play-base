@@ -1,0 +1,3 @@
+login.page.sign.in=Sign In
+login.page.username.not.null=Username can't be null
+login.page.password.not.null=Password can't be null

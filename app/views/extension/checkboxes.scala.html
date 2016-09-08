@@ -1,0 +1,9 @@
+@(field: Field, label: String = "CHANGEME", checkboxMap: Map[String, Boolean], help:String = "")
+<div>
+	<label for="@field.id">@label</label>
+  	@for((checkboxName, isChecked) <- checkboxMap) {
+		<label>
+			<input type="checkbox" name="@(field.name + "[]")" id="@checkboxName" value="@checkboxName" @if(isChecked) {checked}>@checkboxName</input>
+        </label>
+	}
+</div>

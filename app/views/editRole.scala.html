@@ -1,0 +1,31 @@
+@(id: Long, roleForm: Form[Role])
+
+@import helper._
+
+@main("Edit Role") {
+	
+	@if(roleForm.hasErrors) {
+        <div>
+            <em>Validation Errors</em>
+            @for((key, value) <- roleForm.errors) {
+            	<p>
+            		@key
+            		@for(error <- value) {
+            			<p>@error.message</p>
+            		}
+            	</p>
+            }
+        </div>
+    }
+    
+	@form(routes.Administration.updateRole(id)) {
+		<input type="hidden" id="id" name="id" value="@roleForm("id").value" />
+		<fieldset>
+			@inputText(roleForm("authority"), '_label -> "Authority")
+		</fieldset>
+		<div>
+            <input type="submit" value="Save Role"> or 
+            <a href="@routes.Administration.roles()">Cancel</a> 
+        </div>
+	}
+}

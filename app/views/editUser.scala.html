@@ -1,0 +1,32 @@
+@(id: Long, userFormData: Form[forms.UserFormData], roles: Map[String,Boolean])
+
+@import helper._
+@import extension._
+
+@main("Edit User") {
+	
+	@if(userFormData.hasErrors) {
+        <div>
+            <em>Validation Errors</em>
+            @for((key, value) <- userFormData.errors) {
+            	<p>
+            		@key
+            		@for(error <- value) {
+            			<p>@error.message</p>
+            		}
+            	</p>
+            }
+        </div>
+    }
+    
+	@form(routes.Administration.updateUser(id)) {
+		<fieldset>
+			@inputText(userFormData("username"), '_label -> "Username")
+			@checkboxes(userFormData("authorities"), label = "Authorities", checkboxMap = roles)
+		</fieldset>
+		<div>
+            <input type="submit" value="Save User"> or 
+            <a href="@routes.Administration.users()">Cancel</a> 
+        </div>
+	}
+}

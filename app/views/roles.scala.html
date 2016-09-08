@@ -1,0 +1,39 @@
+@(currentPage: web.Page[_ <: Role])
+
+@link(newPage:Int) = @{
+   	routes.Administration.roles(newPage)
+}
+
+@header(key:String, title:String) = {
+    <th>
+        <a href="@link(0)">@title</a>
+    </th>
+}
+
+@main("Roles") {
+
+	@if(currentPage.getTotalRowCount == 0) {
+        <div>
+            <em>Nothing to display</em>
+        </div>
+    } else {
+    	<table>
+        	<thead>
+        		<tr>
+                	@header("id", "Id")
+                    @header("authority", "Authority")
+                    @header("", "Delete")
+            	</tr>
+			</thead>
+			<tbody>
+				@for(role <- currentPage.getList) {
+					<tr>
+						<td><a href="@routes.Administration.editRole(role.getId)">@role.getId</a></td>
+						<td>@role.getAuthority</td>
+						<td><a href="@routes.Administration.deleteRole(role.getId)">X</a></td>
+					</tr>
+				}
+			</tbody>
+		</table>
+    }
+}
